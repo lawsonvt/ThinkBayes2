@@ -20,7 +20,7 @@ suite.Update(6) # if i roll a 6
 
 suite.Items() # updated posteriors
 
-for roll in [6,8,7,7,5,4]:  # a whole mess of roles
+for roll in [6,8,7,7,5,4]:  # a whole mess of rolls
     suite.Update(roll)
 
 suite.Items()
