@@ -7,6 +7,15 @@ License: GNU GPLv3 http://www.gnu.org/licenses/gpl.html
 
 from __future__ import print_function, division
 
+import sys
+import os
+
+tb_dir = "/home/pi/Programming/ThinkBayes2/"
+
+sys.path.append(os.path.abspath(tb_dir + "thinkbayes2/"))
+sys.path.append(os.path.abspath(tb_dir + "scripts/"))
+sys.path.append(os.path.abspath(tb_dir + "thinkplot/"))
+
 import csv
 import numpy as np
 import thinkbayes2
@@ -273,11 +282,11 @@ def MakePlots(player1, player2):
                 ylabel='CDF',
                 formats=FORMATS)
 
-
-def MakePlayers():
+# adding in ability to add a directory for the input files
+def MakePlayers(data_dir=""):
     """Reads data and makes player objects."""
-    data = ReadData(filename='showcases.2011.csv')
-    data += ReadData(filename='showcases.2012.csv')
+    data = ReadData(filename=data_dir + 'showcases.2011.csv')
+    data += ReadData(filename=data_dir + 'showcases.2012.csv')
 
     cols = zip(*data)
     price1, price2, bid1, bid2, diff1, diff2 = cols
@@ -291,13 +300,13 @@ def MakePlayers():
     return player1, player2
 
 
-def PlotExpectedGains(guess1=20000, guess2=40000):
+def PlotExpectedGains(guess1=20000, guess2=40000, data_dir=""):
     """Plots expected gains as a function of bid.
 
     guess1: player1's estimate of the price of showcase 1
     guess2: player2's estimate of the price of showcase 2
     """
-    player1, player2 = MakePlayers()
+    player1, player2 = MakePlayers(data_dir)
     MakePlots(player1, player2)
 
     player1.MakeBeliefs(guess1)
@@ -333,10 +342,10 @@ def PlotExpectedGains(guess1=20000, guess2=40000):
                 formats=FORMATS)
 
 
-def PlotOptimalBid():
+def PlotOptimalBid(data_dir=""):
     """Plots optimal bid vs estimated price.
     """
-    player1, player2 = MakePlayers()
+    player1, player2 = MakePlayers(data_dir)
     guesses = np.linspace(15000, 60000, 21)
 
     res = []
