@@ -240,6 +240,15 @@ class Player(object):
                     xlabel='price ($)',
                     ylabel='PMF',
                     formats=FORMATS)
+        
+    def PlotBeliefs(self):
+        """ Plots prior and posterior beliefs to console
+        """
+        thinkplot.Clf()
+        thinkplot.PrePlot(num=2)
+        thinkplot.Pdfs([self.prior, self.posterior])
+        thinkplot.decorate(xlabel='price ($)',
+                           ylabel='PMF')
 
 
 def MakePlots(player1, player2):
